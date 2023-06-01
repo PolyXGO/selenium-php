@@ -42,7 +42,8 @@ foreach ($list_site_testing as $current_site_infor) {
     test_login($driver,$current_site_infor);
     $driver->quit();//Thoát khỏi chromedriver
 }
-echo "End test<br/>";
+
+echo "<div>End testing</div>";
 
 #region Testing
 function test_posting($driver,$current_site_infor=null){

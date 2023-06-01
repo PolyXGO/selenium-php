@@ -1,0 +1,29 @@
+parameters:
+    level: 2
+    paths:
+        - lib/
+        - tests/
+
+    ignoreErrors:
+        # To be fixed in next major version:
+        - message: '#Call to an undefined method Facebook\\WebDriver\\WebDriver::getTouch\(\)#'
+          path: 'lib/Interactions/WebDriverTouchActions.php'
+        - message: '#Call to an undefined method Facebook\\WebDriver\\WebDriver::getTouch\(\)#'
+          path: 'lib/Support/Events/EventFiringWebDriver.php'
+        - message: '#Call to an undefined method Facebook\\WebDriver\\WebDriverElement::getCoordinates\(\)#'
+          path: 'lib/Support/Events/EventFiringWebElement.php'
+        - message: '#Call to an undefined method Facebook\\WebDriver\\WebDriverElement::equals\(\)#'
+          path: 'lib/Support/Events/EventFiringWebElement.php'
+        - message: '#Call to an undefined method Facebook\\WebDriver\\WebDriverElement::takeElementScreenshot\(\)#'
+          path: 'lib/Support/Events/EventFiringWebElement.php'
+        - message: '#Call to an undefined method Facebook\\WebDriver\\WebDriverElement::getShadowRoot\(\)#'
+          path: 'lib/Support/Events/EventFiringWebElement.php'
+        - '#Unsafe usage of new static\(\)#'
+
+        # Parameter is intentionally not part of signature to not break BC
+        - message: '#PHPDoc tag \@param references unknown parameter: \$isW3cCompliant#'
+          path: 'lib/Remote/RemoteWebDriver.php'
+        - message: '#PHPDoc tag \@param references unknown parameter: \$existingCapabilities#'
+          path: 'lib/Remote/RemoteWebDriver.php'
+
+    inferPrivatePropertyTypeFromConstructor: true

@@ -1,0 +1,18 @@
+composer.phar
+composer.lock
+vendor
+tools/php-cs-fixer/vendor
+.php_cs.cache
+.php-cs-fixer.cache
+.phpunit.result.cache
+phpunit.xml
+logs/
+build/
+
+# generic files to ignore
+*.lock
+*.DS_Store
+*~
+*.swp
+.idea
+.vscode

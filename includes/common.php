@@ -16,8 +16,16 @@ function post_article($driver,$current_site_infor,$obj){
 
     //Blog không dùng tinymce có thể tìm kiếm phần tử nhập nội dung qua id sau:
     //$post_description_element = $driver->findElement(WebDriverBy::id('content'));
-
+    
     //Dùng TinyMCE cần tìm kiếm id phần tử nội dung qua iframe.
+    // ===> Chuyển sang chế độ nhập nội dung để active content_ifr
+    $tab_editor_edit_content = $driver->findElement(WebDriverBy::id('content-tmce'));
+    $tab_editor_edit_content->click();
+
+    $wait_iframe_display = $driver->wait()->until(
+        WebDriverExpectedCondition::visibilityOfElementLocated(WebDriverBy::id('content_ifr'))
+    );
+
     $iframe_content = $driver->findElement(WebDriverBy::id('content_ifr'));
     $driver->switchTo()->frame($iframe_content);
     $post_description_element = $driver->findElement(WebDriverBy::id('tinymce'));
@@ -108,9 +116,25 @@ function is_logged($driver,$current_site_infor=null){
 
     $password->submit();
 
+    $is_need_to_confirm=true;
+    try{
+        $is_need_to_confirm=$driver->wait()->until(
+            WebDriverExpectedCondition::urlContains('confirm_admin_email'),false
+        );
+    }catch(Exception $e){
+        $is_need_to_confirm=false;
+    }
+
+    if($is_need_to_confirm){//Confirm email
+        $driver->findElement(WebDriverBy::id('correct-admin-email'))->click();
+    }
+
     $is_logged=true;
     $is_logged=$driver->wait()->until(
         WebDriverExpectedCondition::urlContains('wp-admin'),false
     );
     return $is_logged;
+}
+function execute_login(){
+
 }

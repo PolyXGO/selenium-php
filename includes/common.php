@@ -43,8 +43,13 @@ function post_article($driver,$current_site_infor,$obj){
     $tab_editor_edit_content = $driver->findElement(WebDriverBy::id('content-tmce'));
     $tab_editor_edit_content->click();
 
-    //Save chế độ nháp bài viết
-    $driver->findElement(WebDriverBy::id('save-post'))->submit();
+    //Save chế độ nháp bài viết: xử lý submit nếu không hỗ trợ thì xử lý click();
+    try{
+        $driver->findElement(WebDriverBy::id('save-post'))->submit();
+    }catch(Exception $e){
+        $driver->findElement(WebDriverBy::id('save-post'))->click();
+    }
+    
 
     // Chờ đến khi phần tử có class "notice-success" hiển thị tức thông báo update thành công.
     $successNotice = $driver->wait()->until(
@@ -77,7 +82,7 @@ function test_upload_file_from_media($driver,$file_path,$current_site_infor=null
     if($is_uploaded){
             //TODO: ảnh đầu tiên => là ảnh mới upload;
             $first_media = $driver->wait()->until(
-                WebDriverExpectedCondition::visibilityOfElementLocated(WebDriverBy::cssSelector('.attachments-wrapper .thumbnail:first-child'))
+                WebDriverExpectedCondition::visibilityOfElementLocated(WebDriverBy::cssSelector('.attachments-wrapper .thumbnail'))
             );
             $first_media->click();
             
